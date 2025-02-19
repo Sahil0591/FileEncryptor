@@ -1,0 +1,20 @@
+What is sensitive personal information?
+To summarise, general personal information is any data which relates to an individual – such as, their name, address or physical appearance.
+
+Personal information is considered to be ‘sensitive’ when it includes various special categories. When handling sensitive information, extra care and attention must be paid at all times. The exposure of sensitive personal information can cause substantial financial or personal harm.
+
+What are some examples of sensitive information?
+Sensitive personal information examples include:
+
+Racial or ethnic origin
+Political opinions
+Religious beliefs
+Trade union membership
+Genetic data
+Biometric data
+Health records
+
+What is commercially sensitive information?
+Commercially sensitive information will typically involve any data which, if misused, could jeopardise a businesses’ general commercial interests. An issue could arise if the commercially sensitive information is released to either a competitor or the general public.
+
+Often, this will include intellectual property, trade secrets and information related to company formation, such as mergers and acquisitions. Commercially sensitive information could also include customer or supplier records.
