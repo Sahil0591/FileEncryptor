@@ -23,6 +23,31 @@ def ensure_directories():
         os.system(f'attrib +h "{UUID_DIRECTORY}"')
         os.system(f'attrib +h "{KEY_PARTS_DIR}"')
 
+def list_connected_drives():
+    print("\nAvailable Drives and Volume Labels:")
+    drives = [f"{chr(c)}:/" for c in range(65, 91) if os.path.exists(f"{chr(c)}:/")]
+    for drive in drives:
+        try:
+            vol_name = ctypes.create_unicode_buffer(1024)
+            fs_name = ctypes.create_unicode_buffer(1024)
+            serial = ctypes.c_ulong()
+            max_len = ctypes.c_ulong()
+            flags = ctypes.c_ulong()
+
+            ctypes.windll.kernel32.GetVolumeInformationW(
+                ctypes.c_wchar_p(drive),
+                vol_name,
+                ctypes.sizeof(vol_name),
+                ctypes.byref(serial),
+                ctypes.byref(max_len),
+                ctypes.byref(flags),
+                fs_name,
+                ctypes.sizeof(fs_name)
+            )
+
+            print(f"  [{drive}] - {vol_name.value}")
+        except:
+            continue
 
 # Get drive label on Windows
 def get_windows_usb_drive(label):
@@ -76,7 +101,7 @@ def derive_key_from_password(password: str, salt: bytes) -> bytes:
 
 def encrypt_file(filename):
     ensure_directories()
-
+    list_connected_drives()
     usb_label = input("Enter the name (volume label) of your USB drive: ").strip()
     usb_root = get_windows_usb_drive(usb_label)
     if not usb_root:
