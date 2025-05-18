@@ -130,12 +130,28 @@ def decrypt_file(encrypted_filename):
 
         # Attempt to decrypt
         decrypted_data = fernet.decrypt(encrypted_data)
-        original_filename = encrypted_filename[:-4]
+        # Step 1: Derive original filename
+        original_filename = encrypted_filename[:-4] if encrypted_filename.endswith(".enc") else encrypted_filename
 
-        with open(original_filename, 'wb') as dec_file:
+        # Step 2: Check if file with same name exists
+        base, ext = os.path.splitext(original_filename)
+        counter = 1
+        new_filename = original_filename
+
+        while os.path.exists(new_filename):
+            new_filename = f"{base}_restored_{counter}{ext}"
+            counter += 1
+
+        # Step 3: Notify the user
+        if new_filename != original_filename:
+            print(f"File with name '{original_filename}' already exists.")
+            print(f"Decrypted file saved as '{new_filename}' instead.")
+
+        # Step 4: Save decrypted content
+        with open(new_filename, 'wb') as dec_file:
             dec_file.write(decrypted_data)
 
-        print(f"File '{encrypted_filename}' decrypted successfully as '{original_filename}'!")
+        print(f"File '{encrypted_filename}' decrypted successfully as '{new_filename}'!")
 
         # Delete encrypted file and key, cuz we want a new secret key to 
         # be associated with the file for a new encryption
